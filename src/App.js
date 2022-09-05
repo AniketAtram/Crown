@@ -1,5 +1,5 @@
+import Categories from './components/CategoriesComponent/Categories.component';
 import './App.css';
-
 function App() {
 
   const data = [
@@ -26,19 +26,7 @@ function App() {
   ];
 
   return (
-    <div className="categories-container">
-      {
-        data.map((item) => (
-          <div className='category-container' key={item.id}>
-            {/* {image} */}
-            <div className='category-body-conatiner'>
-              <h2>{item.title}</h2>
-              <p>Shop Now</p>
-            </div>
-          </div>
-        ))
-      }
-    </div>
+    <Categories categoriesData={data} />
   );
 }
 
