@@ -15,6 +15,9 @@ function NavBar() {
                     <Link to='/shop' className="nav-link">
                         SHOP
                     </Link>
+                    <Link to='/sign-in' className="nav-link">
+                        SIGN IN
+                    </Link>
                 </div>
             </div>
 
