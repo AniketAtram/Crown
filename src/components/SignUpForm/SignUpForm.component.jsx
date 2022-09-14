@@ -1,5 +1,5 @@
 import './SignUpForm.styles.scss';
-import {useState} from 'react'
+import { useState } from 'react'
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAut } from '../../utils/firebase/firebase.utils';
 import FormInput from '../FormInput/FormInput.component';
 import './SignUpForm.styles.scss';
@@ -7,7 +7,7 @@ import Button from '../Button/Button.component';
 
 function SignUp() {
 
-    
+
     const initialFormFields = {
         displayName: '',
         email: '',
@@ -19,16 +19,16 @@ function SignUp() {
     const [formFields, setFormFields] = useState(initialFormFields);
 
 
-    const {displayName, email, password, confirmPassword} = formFields;
-    
-    
+    const { displayName, email, password, confirmPassword } = formFields;
+
+
     // console.table(formFields);
 
     const onChangeHandler = (event) => {
 
-        const {name, value} = event.target;
+        const { name, value } = event.target;
 
-        setFormFields({...formFields, [name]: value});
+        setFormFields({ ...formFields, [name]: value });
 
     };
 
@@ -38,17 +38,17 @@ function SignUp() {
     }
 
 
-    const onSubmitHandler = async (event) =>{
+    const onSubmitHandler = async (event) => {
 
         // prevent any default behaviour
         event.preventDefault();
 
-        if (password !== confirmPassword){
+        if (password !== confirmPassword) {
             console.log("password do not match!");
             return;
         }
 
-        try{
+        try {
             // create a new user credentials in forebase by passing username and password
             const { user } = await createAuthUserWithEmailAndPassword(email, password);
 
@@ -57,18 +57,18 @@ function SignUp() {
 
             await createUserDocumentFromAut(user, { displayName });
         }
-        catch(error){
-            if (error.code === 'auth/email-already-in-use'){
+        catch (error) {
+            if (error.code === 'auth/email-already-in-use') {
                 alert("Email already in use!!");
             }
-            else{
+            else {
                 console.error(error.message);
             }
         }
     };
 
 
-    return ( 
+    return (
         <>
             <div className='sing-up-form-container'>
 
@@ -80,31 +80,28 @@ function SignUp() {
 
 
                 <form onSubmit={onSubmitHandler}>
-            
-
-                    
-                    <FormInput onChange={onChangeHandler} label='displayName' value={displayName} required type="text" />
 
 
-                    
-                    <FormInput onChange={onChangeHandler} label='email' value={email} required type="email" />
+
+                    <FormInput onChange={onChangeHandler} name="displayName" label='displayName' value={displayName} required type="text" />
 
 
-                    <FormInput onChange={onChangeHandler} label='password' value={password} required type="password" />
+                    <FormInput onChange={onChangeHandler} name="email" label='email' value={email} required type="email" />
 
 
-                    <FormInput onChange={onChangeHandler} label='confirmPassword' value={confirmPassword} required type="password" />
-                    
+                    <FormInput onChange={onChangeHandler} name='password' label='password' value={password} required type="password" />
 
-                    {/* <button type="submit">Sign Up</button> */}
 
-                    <Button type='submit' children="Submit" buttonType='default'/>
+                    <FormInput onChange={onChangeHandler} name='confirmPassword' label='confirmPassword' value={confirmPassword} required type="password" />
+
+
+                    <Button type='submit' children="Sign Up" buttonType='default' />
 
 
                 </form>
             </div>
         </>
-     );
+    );
 }
 
 export default SignUp;

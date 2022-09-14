@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 const firebaseConfig = {
     apiKey: "AIzaSyCC4vUruM6adtW8TxUTP3eXY1CI6HSVmdk",
@@ -52,10 +52,20 @@ export const createUserDocumentFromAut = async (userAuth, additionalInformation 
     return userDocRef;
 };
 
+// Helper function to register a new user
 export const createAuthUserWithEmailAndPassword = async (email, password) =>{
     if(!email || !password){
         return;
     }
 
     return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+// Helper function to authenticate user if the user has already registered
+export const signInAuthUserWithEmailAndPassword = async (email, password) =>{
+    if(!email || !password){
+        return;
+    }
+
+    return await signInWithEmailAndPassword(auth, email, password);
 };
