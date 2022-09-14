@@ -1,7 +1,7 @@
 import SignUp from "../../components/SignUpForm/SignUpForm.component";
 import { createUserDocumentFromAut, SignInWithGooglePopup } from "../../utils/firebase/firebase.utils";
 
-function SignIn() {
+function Authentication() {
 
     const userSignInHandler = async () =>{
         const response = await SignInWithGooglePopup();
@@ -23,4 +23,4 @@ function SignIn() {
      );
 }
 
-export default SignIn;
+export default Authentication;
