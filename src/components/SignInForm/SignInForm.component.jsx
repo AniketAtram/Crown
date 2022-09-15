@@ -4,22 +4,19 @@ import { SignInWithGooglePopup, signInAuthUserWithEmailAndPassword } from "../..
 import FormInput from '../FormInput/FormInput.component';
 import './SignInForm.styles.scss';
 import Button from '../Button/Button.component';
+import { useContext } from 'react';
+import {UserContext} from '../../context/user.context';
 
 function SignIn() {
 
-    
     const initialFormFields = {
         email: '',
         password: '',
     }
 
-
     const [formFields, setFormFields] = useState(initialFormFields);
-
-
     const { email, password } = formFields;
-    
-    
+    const {setCurrentUser} = useContext(UserContext);
     // console.table(formFields);
 
     const onChangeHandler = (event) => {
@@ -45,8 +42,8 @@ function SignIn() {
 
 
         try{
-            await signInAuthUserWithEmailAndPassword(email, password);
-            // console.log(response);
+            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+            setCurrentUser(user);
             resetFormFields();
             
         }
@@ -96,9 +93,10 @@ function SignIn() {
 
                     <div className='buttons-container'>
                     
-                    <Button type='submit' children="Sign In" buttonType='default'/>
+                        <Button type='submit' children="Sign In" buttonType='default'/>
 
-                    <Button type='button' onClick={GoogleSignInHandler} buttonType="google" children={'Google Sign In'} />
+                        <Button type='button' onClick={GoogleSignInHandler} buttonType="google" children={'Google Sign In'} />
+                    
                     </div>
 
                 </form>
