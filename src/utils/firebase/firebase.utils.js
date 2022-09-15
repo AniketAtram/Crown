@@ -1,5 +1,13 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import {
+    getAuth,
+    signInWithPopup,
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
+} from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 const firebaseConfig = {
     apiKey: "AIzaSyCC4vUruM6adtW8TxUTP3eXY1CI6HSVmdk",
@@ -41,7 +49,7 @@ export const createUserDocumentFromAut = async (userAuth, additionalInformation 
         const { displayName, email } = userAuth;
         const createdAt = new Date();
         try {
-            await setDoc(userDocRef, { displayName, email, createdAt,...additionalInformation });
+            await setDoc(userDocRef, { displayName, email, createdAt, ...additionalInformation });
         }
         catch (error) {
             console.error(error.message);
@@ -53,8 +61,8 @@ export const createUserDocumentFromAut = async (userAuth, additionalInformation 
 };
 
 // Helper function to register a new user
-export const createAuthUserWithEmailAndPassword = async (email, password) =>{
-    if(!email || !password){
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) {
         return;
     }
 
@@ -62,8 +70,8 @@ export const createAuthUserWithEmailAndPassword = async (email, password) =>{
 };
 
 // Helper function to authenticate user if the user has already registered
-export const signInAuthUserWithEmailAndPassword = async (email, password) =>{
-    if(!email || !password){
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) {
         return;
     }
 
@@ -72,3 +80,8 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) =>{
 
 // Helper function to sign out user
 export const signOutUser = async () => await signOut(auth);
+
+// Helper function to hod user's authentication state
+export const onAuthStateChangeListener = (callback) =>{
+    onAuthStateChanged(auth, callback);
+};

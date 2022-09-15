@@ -1,15 +1,11 @@
 import './SignUpForm.styles.scss';
 import { useState } from 'react'
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAut } from '../../utils/firebase/firebase.utils';
-import { useContext } from 'react';
-import { UserContext } from '../../context/user.context';
 import FormInput from '../FormInput/FormInput.component';
 import './SignUpForm.styles.scss';
 import Button from '../Button/Button.component';
 
 function SignUp() {
-
-    const { setCurrentUser } = useContext(UserContext);
 
     const initialFormFields = {
         displayName: '',
@@ -54,10 +50,8 @@ function SignUp() {
         try {
             // create a new user credentials in forebase by passing username and password
             const { user } = await createAuthUserWithEmailAndPassword(email, password);
-            setCurrentUser(user);
             resetFormFields();
             // Crete a user document inside firestore
-
             await createUserDocumentFromAut(user, { displayName });
         }
         catch (error) {
