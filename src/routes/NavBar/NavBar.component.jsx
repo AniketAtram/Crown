@@ -8,11 +8,10 @@ import './NavBar.styles.scss';
 
 function NavBar() {
 
-    const {currentUser, setCurrentUser} = useContext(UserContext);
+    const {currentUser} = useContext(UserContext);
 
     const OnSignoutHandler = async () => {
         await signOutUser();
-        setCurrentUser(null);
     }
 
     return (
